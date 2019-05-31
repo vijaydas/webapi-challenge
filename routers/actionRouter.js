@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const projectsdb = require("../data/helpers/projectModel");
 const actionsdb = require("../data/helpers/actionModel");
-
+//console.log("inside the action router")
 // CRUD 
 
 // Read
 
 router.get("/", (req, res) => {
+    console.log("inside the get at root")
     actionsdb.get()
     .then(actions => {
         res.status(200).json(actions);
@@ -19,18 +20,25 @@ router.get("/", (req, res) => {
 
 
 // Create new Action
-router.post("/:id/actions", validateProjectId, (req, res) => {
-    const newAction = { description: req.body.description, notes: req.body.notes };
+router.post("/:id/actions", (req, res) => {
+
+    const newAction = {
+        description: req.body.description,
+        notes: req.body.notes,
+        project_id: req.params.id
+     };
+
     actionsdb
     .insert(newAction)
-    .then(response => {
+    .then(action => {
       res.status(201).json(
-        response
-      );
+        action
+    );
     })
     .catch(error => {
-      res.status(500).json({
-        error: error}
+        console.log(error)
+      res.status(500).json(
+          error
       )
     })
   
@@ -46,7 +54,8 @@ router.post("/:id/actions", validateProjectId, (req, res) => {
 
 
 function validateProjectId(req, res, next) {
-    const id = req.params.id;
+    const id = req.body.project_id;
+    console.log(id);
     projectsdb
       .get(id)
       .then(project => {
@@ -57,8 +66,8 @@ function validateProjectId(req, res, next) {
           res.status(400).json({ message: "Invalid Project ID" });
         }
       })
-      .catch(err => {
-        res.status(500).json(err);
+      .catch(error => {
+        res.status(500).json( {message: "error in the validation by id function"});
       });
   }
 
