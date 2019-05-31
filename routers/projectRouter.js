@@ -85,9 +85,22 @@ router.post("/", (req, res) => {
       });
   });
   
-
-
-
+  router.get("/:id/actions", (req, res) => {
+    projectsdb.getProjectActions(req.params.id)
+      .then(actions => {
+        if (actions) {
+          res.status(200).json(actions);
+        } else {
+          res.status(404).json({ message: "No project" });
+        }
+      })
+      .catch(error => {
+        res.status(500).json({
+          message: "Error"
+        });
+      });
+  });
+  
 
   function validateProjectId(req, res, next) {
     const id = req.params.id;

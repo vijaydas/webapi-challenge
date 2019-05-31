@@ -50,20 +50,19 @@ router.post("/:id/actions", (req, res) => {
 
 // CUSTOM MIDDLEWARE
 
-// validate project id
+// validate action id
 
 
-function validateProjectId(req, res, next) {
-    const id = req.body.project_id;
-    console.log(id);
-    projectsdb
+function validateActionId(req, res, next) {
+    const id = req.params.id;
+    actionsdb
       .get(id)
-      .then(project => {
-        if (project) {
-          req.project = project;
+      .then(action => {
+        if (action) {
+          req.action = action;
           next();
         } else {
-          res.status(400).json({ message: "Invalid Project ID" });
+          res.status(400).json({ message: "Invalid Action ID" });
         }
       })
       .catch(error => {
