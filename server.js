@@ -4,8 +4,8 @@ const cors = require("cors");
 
 // import routers
 
-const actionRouter = require("./routers/actionRouter");
-const projectRouter = require("./routers/projectRouter");
+const actionRouter = require("./routers/actionRouter")
+const projectRouter = require("./routers/projectRouter")
 
 const server = express();
 
