@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
     .then(actions => {
         res.status(200).json(actions);
     })
-    .catch(error => {
+    .catch(err => {
         res.status(500).json({error: "Unable to retrieve actions"});
     });
 });
