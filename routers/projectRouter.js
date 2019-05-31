@@ -36,8 +36,6 @@ router.get("/:id", validateProjectId, (req,res)=> {
     });
 });
 
-
-
 // Create
 
 router.post("/", (req, res) => {
@@ -49,6 +47,27 @@ router.post("/", (req, res) => {
         res.status(500).json({ error, message: "Error adding the project!" });
       });
   });
+
+
+  router.delete("/:id", validateProjectId, (req, res)=> {
+    const id = req.params.id;
+    console.log(id);
+      projectsdb
+      .remove(id)
+      .then(response => {
+          res.status(200).json({
+              message: "project deleted"
+          });
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: "another error"
+          });
+      });
+  });
+  
+
+
 
 
   function validateProjectId(req, res, next) {
