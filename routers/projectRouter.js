@@ -66,6 +66,25 @@ router.post("/", (req, res) => {
       });
   });
   
+  
+
+  router.put("/:id", validateProjectId, (req, res)=> {
+    const id = req.params.id;
+    console.log(id);
+      projectsdb
+      .update(id, req.body)
+      .then(response => {
+          res.status(200).json(
+              response
+          )
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: "another error"
+          });
+      });
+  });
+  
 
 
 
