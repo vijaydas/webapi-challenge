@@ -45,6 +45,59 @@ router.post("/:id/actions", (req, res) => {
   });
   
 
+  router.get("/:id", validateActionId, (req,res)=> {
+    console.log("inside the get by ID ACTIONS")
+    const id = req.params.id;
+    console.log(id);
+    actionsdb.get(id)
+    .then(action => {
+        if (action) {
+            res.status(200).json({
+                action
+            });
+        } else {
+            res.status(201).json({message: "sorry no action"});
+        }
+        
+    })
+    .catch(err => {
+        res.status(500).json({err, message: "Unable to retrieve action"});
+    });
+});
+
+router.put("/:id", validateActionId, (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+    actionsdb
+    .update(id, req.body)
+    .then(response => {
+        res.status(200).json(
+            response
+        )
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "another error"
+        });
+    });
+});
+
+router.delete("/:id", validateActionId, (req, res)=> {
+  const id = req.params.id;
+  console.log(id);
+    actionsdb
+    .remove(id)
+    .then(response => {
+        res.status(200).json({
+            message: "action deleted"
+        });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "another error"
+        });
+    });
+});
 
 
 
