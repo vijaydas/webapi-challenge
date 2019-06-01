@@ -16,8 +16,8 @@ server.use(logger);
 
 // server.use the routers
 
-server.use("/actions", actionRouter);
-server.use("/projects", projectRouter);
+server.use("/api/actions", actionRouter);
+server.use("/api/projects", projectRouter);
 
 // custom logger middleware
 
